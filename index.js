@@ -1,29 +1,33 @@
 const form = document.querySelector('form');
+
 const input = document.querySelector('#to-do-list');
+
 const body = document.querySelector('body');
-const p = document.createElement('p');
+
+const p = document.querySelector('p');
 
 function generateLiHandler() {
 	const ul = document.querySelector('ul');
+	const liSection = document.createElement('section');
 	const newLi = document.createElement('li');
+	const btnDeleteLi = document.createElement('button');
 
 	if (!input.value) {
 		throw 'Please enter a valid input.';
 	}
 
 	newLi.textContent = input.value;
-	ul.append(newLi);
-	newLi.addEventListener('click', generateLiHandler);
-}
 
-const lis = document.querySelectorAll('li');
-for (const li of lis) {
-	if (li) {
-		li.addEventListener('click', () => {
-			console.log(li);
-			li.style.textDecoration = 'line-through';
-		});
-	}
+	btnDeleteLi.textContent = 'Delete';
+	btnDeleteLi.setAttribute('class', 'btn-delete');
+
+	ul.append(liSection);
+	liSection.append(newLi);
+	liSection.append(btnDeleteLi);
+
+	p.textContent = '';
+
+	newLi.addEventListener('click', generateLiHandler);
 }
 
 form.addEventListener('submit', (event) => {
@@ -31,13 +35,21 @@ form.addEventListener('submit', (event) => {
 
 	try {
 		generateLiHandler();
-		if (p) {
-			p.remove();
-		}
 	} catch (error) {
 		p.textContent = error;
-		body.append(p);
+		console.error('InputError: ', error);
 	}
-
 	form.reset();
+});
+
+const ul = document.querySelector('ul');
+const li = document.querySelector('li');
+const section = document.querySelector('section');
+const btnDeleteLi = document.querySelectorAll('.btn-button');
+
+ul.addEventListener('click', (event) => {
+	if (event.target === li) {
+		console.log(event.target);
+	}
+	console.log(event.target);
 });
